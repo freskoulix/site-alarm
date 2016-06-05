@@ -65,11 +65,11 @@ var alarm = {
     console.log('Triggering alarm');
     self.PIN.writeSync(1);
     setTimeout(function () {
+      console.log('Closing PIN');
       self.PIN.writeSync(0);
-      self.PIN.unexport();
-      self.PIN_CLOSED = true;
       setTimeout(function () {
         console.log('Terminating app');
+        self.PIN.unexport();
       }, 2000);
     }, self.alarmDuration * 1000);
   },
