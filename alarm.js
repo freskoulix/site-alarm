@@ -24,7 +24,7 @@ var alarm = {
     this.PIN_CLOSED = false;
     this.alarmDuration = settings.alarmDuration;
 
-    // this.eventListeners();
+    this.eventListeners();
 
     this.check();
   },
@@ -68,6 +68,7 @@ var alarm = {
       console.log('Terminating app');
       self.PIN.writeSync(1);
       self.PIN.unexport();
+      self.PIN_CLOSED = true;
     }, self.alarmDuration * 1000);
   },
   eventListeners: function () {
@@ -75,7 +76,7 @@ var alarm = {
 
     function exitHandler(options, error) {
         if (options.cleanup && !self.PIN_CLOSED) {
-          self.PIN.writeSync(0);
+          self.PIN.writeSync(1);
           self.PIN.unexport();
           self.PIN_CLOSED = true;
         }
