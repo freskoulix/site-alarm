@@ -73,11 +73,24 @@ var alarm = {
     });
   },
   eventListeners: function () {
-    process.on('SIGINT', function () {
-      this.PIN.writeSync(0);
-      this.PIN.unexport();
-      process.exit();
-    });
+    var self = this;
+
+    function exitHandler(options, error) {
+        if (options.cleanup) {
+          this.PIN.writeSync(0);
+          this.PIN.unexport();
+        }
+        if (error)  {
+          console.error(error.stack);
+        }
+        if (options.exit) {
+          process.exit();
+        }
+    }
+
+    process.on('exit', exitHandler.bind(null,{cleanup: true}));
+    process.on('SIGINT', exitHandler.bind(null,{exit: true}));
+    process.on('uncaughtException', exitHandler.bind(null,{exit: true}));
   }
 };
 
