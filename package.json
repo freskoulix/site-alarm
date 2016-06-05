@@ -1,0 +1,16 @@
+{
+  "name": "codebender-alarm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "alarm.js",
+  "scripts": {
+    "alarm": "node alarm.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christos Nianiakas <cnianiak@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "rpio": "^0.9.11",
+    "uptime-robot": "^1.1.0"
+  }
+}

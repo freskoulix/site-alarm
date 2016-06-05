@@ -1,0 +1,18 @@
+{
+  "apps" : [
+    {
+      "name": "alarm",
+      "script": "alarm.js",
+      "instances": 1,
+      "exec_mode": "fork",
+      "restart_delay": 5000,
+      "watch": false,
+      "env": {
+        "NODE_ENV": "development",
+      },
+      "env_production" : {
+         "NODE_ENV": "production"
+      }
+    }
+  ]
+}

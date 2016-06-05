@@ -1,0 +1,7 @@
+{
+  "username": "username",
+  "API_KEY": "API_KEY",
+  "monitorID": "monitorID",
+  "PIN": "PIN",
+  "alarmDuration": "alarmDuration"
+}
