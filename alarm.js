@@ -58,6 +58,8 @@ var alarm = {
     });
   },
   alarm: function () {
+    var self = this;
+
     console.log('Triggering alarm');
     this.PIN.read(function (error, value) {
       if (error) {
@@ -65,11 +67,11 @@ var alarm = {
         return;
       }
 
-      this.PIN.writeSync(1);
+      self.PIN.writeSync(1);
       setTimeout(function () {
-        this.PIN.writeSync(0);
-        this.PIN.unexport();
-      }, this.alarmDuration);
+        self.PIN.writeSync(0);
+        self.PIN.unexport();
+      }, self.alarmDuration);
     });
   },
   eventListeners: function () {
