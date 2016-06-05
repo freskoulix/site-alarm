@@ -1,7 +1,7 @@
 var settings = require('./settings.json');
 var Client = require('uptime-robot');
 var cl = new Client(settings.API_KEY);
-var rpio = require('rpio');
+var Gpio = require('onoff').Gpio;
 
 
 // Global variables
@@ -19,8 +19,10 @@ var alarm = {
   start: function () {
     console.log('Starting app');
 
-    this.PIN = parseInt(settings.PIN, 10);
+    this.PIN = new Gpio(settings.PIN, 'out');
     this.alarmDuration = settings.alarmDuration;
+
+    this.eventListeners();
 
     this.check();
   },
@@ -57,15 +59,23 @@ var alarm = {
   },
   alarm: function () {
     console.log('Triggering alarm');
-    var state = rpio.read(this.PIN);
-    if (state === 1) {
-      rpio.close(this.PIN);
-    }
-    rpio.open(this.PIN, rpio.OUTPUT, rpio.LOW);
-    rpio.write(this.PIN, rpio.HIGH);
-    rpio.sleep(this.alarmDuration);
-    rpio.write(this.PIN, rpio.LOW);
-    rpio.close(this.PIN);
+    this.PIN.read(function (error, value) {
+      if (error) {
+        console.error('Error:', error);
+        return;
+      }
+
+      this.PIN.writeSync(1);
+      setTimeout(function () {
+        this.PIN.writeSync(0);
+        this.PIN.unexport();
+      }, this.alarmDuration);
+    });
+  },
+  eventListeners: function () {
+    process.on('SIGINT', function () {
+      this.PIN.unexport();
+    });
   }
 };
 
