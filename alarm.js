@@ -20,6 +20,7 @@ var alarm = {
     console.log('Starting app');
 
     this.PIN = new Gpio(settings.PIN, 'out');
+    this.PIN_CLOSED = false;
     this.alarmDuration = settings.alarmDuration;
 
     this.eventListeners();
@@ -71,6 +72,7 @@ var alarm = {
       setTimeout(function () {
         self.PIN.writeSync(0);
         self.PIN.unexport();
+        self.PIN_CLOSED = true;
       }, self.alarmDuration);
     });
   },
@@ -78,7 +80,7 @@ var alarm = {
     var self = this;
 
     function exitHandler(options, error) {
-        if (options.cleanup) {
+        if (options.cleanup && !self.PIN_CLOSED) {
           self.PIN.writeSync(0);
           self.PIN.unexport();
         }
