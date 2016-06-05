@@ -24,7 +24,7 @@ var alarm = {
     this.PIN_CLOSED = false;
     this.alarmDuration = settings.alarmDuration;
 
-    this.eventListeners();
+    // this.eventListeners();
 
     this.check();
   },
