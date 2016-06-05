@@ -35,7 +35,7 @@ var alarm = {
 
           if (STATUS_MAP[monitor.status] == 'DOWN') {
             // Trigger alarm
-            this.alarm();
+            self.alarm();
           }
         }
       });
