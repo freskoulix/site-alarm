@@ -83,6 +83,7 @@ var alarm = {
         if (options.cleanup && !self.PIN_CLOSED) {
           self.PIN.writeSync(0);
           self.PIN.unexport();
+          self.PIN_CLOSED = true;
         }
         if (error)  {
           console.error(error.stack);
