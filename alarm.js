@@ -76,6 +76,7 @@ var alarm = {
     process.on('SIGINT', function () {
       this.PIN.writeSync(0);
       this.PIN.unexport();
+      process.exit();
     });
   }
 };
