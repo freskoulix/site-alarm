@@ -76,6 +76,7 @@ var alarm = {
 
     function exitHandler(options, error) {
         if (options.cleanup && !self.PIN_CLOSED) {
+          console.log('Terminating app');
           self.PIN.writeSync(1);
           self.PIN.unexport();
           self.PIN_CLOSED = true;
