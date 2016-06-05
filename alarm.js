@@ -20,6 +20,7 @@ var alarm = {
     console.log('Starting app');
 
     this.PIN = new Gpio(settings.PIN, 'out');
+    this.PIN.writeSync(0);
     this.PIN_CLOSED = false;
     this.alarmDuration = settings.alarmDuration;
 
@@ -62,19 +63,12 @@ var alarm = {
     var self = this;
 
     console.log('Triggering alarm');
-    this.PIN.read(function (error, value) {
-      if (error) {
-        console.error('Error:', error);
-        return;
-      }
-
-      self.PIN.writeSync(1);
-      setTimeout(function () {
-        self.PIN.writeSync(0);
-        self.PIN.unexport();
-        self.PIN_CLOSED = true;
-      }, self.alarmDuration * 1000);
-    });
+    self.PIN.writeSync(1);
+    setTimeout(function () {
+      self.PIN.writeSync(0);
+      self.PIN.unexport();
+      self.PIN_CLOSED = true;
+    }, self.alarmDuration * 1000);
   },
   eventListeners: function () {
     var self = this;
