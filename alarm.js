@@ -73,7 +73,7 @@ var alarm = {
         self.PIN.writeSync(0);
         self.PIN.unexport();
         self.PIN_CLOSED = true;
-      }, self.alarmDuration);
+      }, self.alarmDuration * 1000);
     });
   },
   eventListeners: function () {
