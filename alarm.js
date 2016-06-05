@@ -57,6 +57,7 @@ var alarm = {
   },
   alarm: function () {
     console.log('Triggering alarm');
+    rpio.close(this.PIN);
     rpio.open(this.PIN, rpio.OUTPUT, rpio.LOW);
     rpio.write(this.PIN, rpio.HIGH);
     rpio.sleep(this.alarmDuration);
